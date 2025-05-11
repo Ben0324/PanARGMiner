@@ -125,16 +125,6 @@ Python 3.7 or higher is recommended.
 
 ---
 
-Tested On 🧪
-
-- Windows 10 / Ubuntu 22.04
-- Python 3.9+
-- Libraries:
-  - `scikit-learn >= 1.1`
-  - `xgboost >= 1.5`
- 
----
-
 ##  License 📜 
 This project is licensed under the MIT License.
 
