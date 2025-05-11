@@ -7,11 +7,12 @@ This Python script implements a robust framework for performing antibiotic resis
 
 ##  Features 📌
 
+- Efficient at extracting key predictive features from large-scale pan-genomic datasets
 - Multi-model feature selection: **XGBoost**, **AdaBoost**, **Lasso**
 - Repeated intersection-based feature voting
 - AUC-weighted scoring of features
 - SVM-based evaluation of selected feature sets
-- Auto-generated timestamped result files
+- Outputs are automatically timestamped for reproducibility
 
 ---
 
