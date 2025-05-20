@@ -131,13 +131,6 @@ This project is licensed under the MIT License.
 
 ---
 
-##  Author 👤
-
-**Yu-Cheng Chen**  
-Institute of Biomedical Informatics, Taipei Medical University
-
----
-
 ## Citation
 
 If you use this script in your research, please cite or acknowledge as follows:
