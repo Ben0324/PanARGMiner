@@ -1,4 +1,4 @@
-# ABFinder: Antibiotic Biomarker Finder
+# ABioFinder: Antibiotic Biomarker Finder
 
 *Cross-Validated Feature Selection for AMR using XGBoost, AdaBoost, Lasso and SVM*
 This Python script implements a robust framework for performing antibiotic resistance feature selection across pan-genomic datasets. It combines multiple machine learning models (XGBoost, AdaBoost, Lasso) and evaluates the selected features with an SVM classifier using AUC score as performance measure.
