@@ -135,4 +135,4 @@ This project is licensed under the MIT License.
 
 If you use this script in your research, please cite or acknowledge as follows:
 
-CVFS 2.0:  An Advanced Cross-Validated Feature Selection Framework for Extracting Key Antimicrobial Resistance Proteins from Large-Scale Pan-genomic Datasets (manuscript currently under submission)
+ABioFinder:  An Advanced Cross-Validated Feature Selection Framework for Extracting Key Antimicrobial Resistance Proteins from Large-Scale Pan-genomic Datasets (manuscript currently under submission)
