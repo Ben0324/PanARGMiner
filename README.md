@@ -122,8 +122,6 @@ Install required packages using pip:
 pip install pandas numpy xgboost scikit-learn
 ```
 
-Python 3.7 or higher is recommended.
-
 ---
 
 ##  License 📜 
