@@ -50,7 +50,7 @@ Example:
 ##  Example Usage 🚀
 
 ```bash
-python feature_selection.py \
+python AbioFinder.py \
   -i ecoli_data.csv \
   -o ./results \
   -t 0.2 \
