@@ -1,4 +1,4 @@
-# ARBioFinder: Antibiotic Resistance Biomarker Finder
+# PanARGMiner: Pan-genomic Antimicrobial Resistance Gene Miner
 
 *Cross-Validated Feature Selection for AMR using XGBoost, AdaBoost, Lasso and SVM*
 This Python script implements a robust framework for performing antibiotic resistance feature selection across pan-genomic datasets. It combines multiple machine learning models (XGBoost, AdaBoost, Lasso) and evaluates the selected features with an SVM classifier using AUC score as performance measure.
@@ -50,7 +50,7 @@ Example:
 ##  Example Usage 🚀
 
 ```bash
-python ARbioFinder.py \
+python PanARGMiner.py \
   -i ecoli_data.csv \
   -o ./results \
   -t 0.2 \
@@ -133,4 +133,4 @@ This project is licensed under the MIT License.
 
 If you use this script in your research, please cite or acknowledge as follows:
 
-ARBioFinder:  An Advanced Cross-Validated Feature Selection Framework for Extracting Key Antimicrobial Resistance Proteins from Large-Scale Pan-genomic Datasets (manuscript currently under submission)
+PanARGMiner:  An Advanced Cross-Validated Feature Selection Framework for Extracting Key Antimicrobial Resistance Proteins from Large-Scale Pan-genomic Datasets (manuscript currently under submission)
