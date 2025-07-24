@@ -119,7 +119,7 @@ Model AUC Score: 0.9338
 Install required packages for Python 3.12:
 
 ```bash
-pip install pandas==2.3.1 numpy==2.3.1 xgboost==3.0.2 scikit-learn==1.7.1 python-dateutil==2.9.0.post0
+pip install pandas==2.3.1 numpy==2.3.1 xgboost==3.0.2 scikit-learn==1.7.1 python-dateutil==2.9.0.post0 pytz==2025.2
 ```
 
 ---
