@@ -45,7 +45,7 @@ def select_features_advanced(X, y, repeat=5, min_occurrence_threshold=0.6, lasso
     feature_run_count = defaultdict(int)
     
     models = {
-        'XGBoost': XGBClassifier(),
+        'XGBoost': XGBClassifier(use_label_encoder=False, eval_metric='logloss', n_jobs=core),
         'AdaBoost': AdaBoostClassifier(),
         'Lasso': Lasso(alpha=lasso_alpha)
     }
