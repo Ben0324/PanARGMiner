@@ -21,6 +21,7 @@ def parse_arguments():
     parser.add_argument("-t", "--test_size", type=float, default=0.2, help="Test set size (e.g., 0.2 for an 80-20 split)")
     parser.add_argument("-r", "--repeat", type=int, default=5, help="Number of feature selection repetitions")
     parser.add_argument("-m", "--min_occurrence_threshold", type=float, default=0.6, help="Minimum occurrence threshold for feature selection")
+    parser.add_argument("-c", "--core", type=int, default=1, help="Number of CPU cores to use (default: 1)")
     
     args = parser.parse_args()
     
@@ -30,6 +31,7 @@ def parse_arguments():
     print(f"Test set size: {args.test_size}")
     print(f"Number of repetitions: {args.repeat}")
     print(f"Feature occurrence threshold: {args.min_occurrence_threshold}")
+    print(f"Number of cores to use: {args.core}")
     
     return args
 
@@ -39,7 +41,7 @@ def normalize_feature_importance(importances):
     importances_normalized = scaler.fit_transform(importances.values.reshape(-1, 1))
     return pd.Series(importances_normalized.flatten(), index=importances.index)
 
-def select_features_advanced(X, y, repeat=5, min_occurrence_threshold=0.6, lasso_alpha=0.01, test_size=0.2):
+def select_features_advanced(X, y, repeat=5, min_occurrence_threshold=0.6, lasso_alpha=0.01, test_size=0.2, core=4):
 
     feature_score_sum = defaultdict(float)
     feature_run_count = defaultdict(int)
@@ -137,12 +139,12 @@ def main():
             y = data['Susceptibility']
             
             X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=args.test_size, stratify=y, random_state=42
+                X, y, test_size=args.test_size, stratify=y,
             )
             
             print("Performing feature selection...")
             selected_feature_scores = select_features_advanced(
-                X_train, y_train, repeat=args.repeat, min_occurrence_threshold=args.min_occurrence_threshold, lasso_alpha=0.01, test_size=args.test_size
+                X_train, y_train, repeat=args.repeat, min_occurrence_threshold=args.min_occurrence_threshold, lasso_alpha=0.01, test_size=args.test_size, core=args.core
             )
             
             selected_features = list(selected_feature_scores.keys())
