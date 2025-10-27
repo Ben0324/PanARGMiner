@@ -5,7 +5,7 @@ This Python script implements a robust framework for performing antibiotic resis
 
 ---
 
-##  Features 📌
+##  Features
 
 - Efficient at extracting key predictive features from large-scale pan-genomic datasets
 - Multi-model feature selection: **XGBoost**, **AdaBoost**, **Lasso**
@@ -16,7 +16,7 @@ This Python script implements a robust framework for performing antibiotic resis
 
 ---
 
-##  Input Format 📁
+##  Input Format
 
 Each input CSV should contain:
 
@@ -35,7 +35,7 @@ Example:
 
 ---
 
-##  Command-Line Arguments ⚙️
+##  Command-Line Arguments
 
 | Flag / Option                      | Description                                                     |
 |-----------------------------------|-----------------------------------------------------------------|
@@ -47,7 +47,7 @@ Example:
 
 ---
 
-##  Example Usage 🚀
+##  Example Usage
 
 ```bash
 python PanARGMiner.py \
@@ -60,7 +60,7 @@ python PanARGMiner.py \
 
 ---
 
-##  Methodology 🧐
+##  Methodology
 
 1. **Preprocessing**
    - Converts `Susceptibility` to binary (Resistant=1, Susceptible=0)
@@ -83,7 +83,7 @@ python PanARGMiner.py \
 
 ---
 
-##  Output 📄
+##  Output
 
 Output summary is saved in the output folder, named with a timestamp, e.g.:
 
@@ -114,7 +114,7 @@ Model AUC Score: 0.9338
 
 ---
 
-##  Dependencies 📦
+##  Dependencies
 
 Install required packages for Python 3.12:
 
@@ -124,7 +124,7 @@ pip install pandas==2.3.1 numpy==2.3.1 xgboost==3.0.2 scikit-learn==1.7.1 python
 
 ---
 
-##  License 📜 
+##  License
 This project is licensed under the MIT License.
 
 ---
