@@ -109,7 +109,10 @@ Selected features:
   - Cluster26: 0.2749
   - Cluster51: 0.0462
   ...
-Model AUC Score: 0.9338
+Model AUC Score: 0.9338Precision: 1.0000
+Recall: 0.9172
+F1-score: 0.9568
+Training Time (seconds): 161.63
 ```
 
 ---
