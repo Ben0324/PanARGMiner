@@ -8,7 +8,7 @@ from sklearn.utils import shuffle
 from xgboost import XGBClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.svm import SVC
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, precision_score, recall_score, f1_score
 from sklearn.linear_model import Lasso
 from sklearn.preprocessing import MinMaxScaler
 import time
@@ -131,6 +131,7 @@ def main():
     
     with open(summary_file, 'w', encoding='utf-8') as f:
         for input_file in args.input:
+            start_time_per_file = time.perf_counter()
             data = pd.read_csv(input_file)
             data['Susceptibility'] = data['Susceptibility'].map({'Susceptible': 0, 'Resistant': 1})
             data = shuffle(data).reset_index(drop=True)
@@ -160,14 +161,24 @@ def main():
             model.fit(X_train_selected, y_train)
             y_pred_proba = model.predict_proba(X_test_selected)[:, 1]
             auc = roc_auc_score(y_test, y_pred_proba)
+            y_pred = model.predict(X_test_selected)
+            precision = precision_score(y_test, y_pred, zero_division=0)
+            recall    = recall_score(y_test, y_pred, zero_division=0)
+            f1        = f1_score(y_test, y_pred, zero_division=0)
+
+            end_time_per_file = time.perf_counter()
+            elapsed = end_time_per_file - start_time_per_file
             
-            print(f"Processing file: {input_file}")
             f.write(f"Filename: {os.path.basename(input_file)}\n")
             f.write(f"Number of selected features: {len(selected_features)}\n")
             f.write("Selected features:\n")
             for feature in selected_features:
                 f.write(f"  - {feature}: {selected_feature_scores[feature]:.4f}\n")
             f.write(f"Model AUC Score: {auc:.4f}\n")
+            f.write(f"Precision: {precision:.4f}\n")
+            f.write(f"Recall: {recall:.4f}\n")
+            f.write(f"F1-score: {f1:.4f}\n")
+            f.write(f"Training Time (seconds): {elapsed:.2f}\n")
             f.write("\n")
     
     print(f"Feature selection summary saved to: {summary_file}")
