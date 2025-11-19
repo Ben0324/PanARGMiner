@@ -108,7 +108,6 @@ Selected features:
   - Cluster8: 0.3494
   - Cluster26: 0.2749
   - Cluster51: 0.0462
-  ...
 Model AUC Score: 0.9338
 Precision: 1.0000
 Recall: 0.9172
