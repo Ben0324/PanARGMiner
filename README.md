@@ -136,4 +136,4 @@ This project is licensed under the MIT License.
 
 If you use this script in your research, please cite or acknowledge as follows:
 
-PanARGMiner:  An Advanced Cross-Validated Feature Selection Framework for Extracting Key Antimicrobial Resistance Proteins from Large-Scale Pan-genomic Datasets (https://doi.org/10.1016/j.csbj.2025.11.046)
+PanARGMiner:  PanARGMiner (Pan-Genomic Antimicrobial Resistance Gene Miner): An advanced feature selection framework for extracting key resistance genes from pan-genomic datasets (https://doi.org/10.1016/j.csbj.2025.11.046)
