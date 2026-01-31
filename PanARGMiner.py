@@ -2,6 +2,7 @@ import argparse
 import pandas as pd
 import numpy as np
 import os
+import sys
 from collections import defaultdict
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
@@ -121,31 +122,91 @@ def generate_filename(base_name, extension="txt", folder="results"):
     os.makedirs(folder, exist_ok=True)
     return os.path.join(folder, filename)
 
+
+def dynamic_label_encoding(series):
+    """
+    Encode labels into binary (0 and 1).
+    Terminates if more than 2 unique labels are found.
+    """
+    # Standardize strings
+    s = series.astype(str).str.strip().str.upper()
+    
+    # Get unique values excluding null-like strings
+    unique_vals = [v for v in s.unique() if v not in ['NAN', 'NONE', '', 'NULL']]
+    
+    # Validation: Ensure binary classification
+    if len(unique_vals) > 2:
+        print(f"\nError: Multiple label types detected: {unique_vals}")
+        print("This tool supports binary classification only. Please clean your data.")
+        sys.exit(1)
+    
+    if not unique_vals:
+        return None, "No valid data found in label column"
+
+    # Encoding Logic
+    if s.str.startswith('R').any():
+        # Case 1: 'R' exists. R=1, others=0 (including 'I' if present)
+        target_mask = s.str.startswith('R')
+        strategy = "R-based (R=1, Others=0)"
+    elif s.str.startswith('I').any():
+        # Case 2: No 'R', but 'I' exists. I=1, others=0
+        target_mask = s.str.startswith('I')
+        strategy = "I-based (I=1, Others=0)"
+    elif len(unique_vals) == 2:
+        # Case 3: Neither 'R' nor 'I' found, but 2 categories exist
+        target_mask = (s == unique_vals[0])
+        strategy = f"Fallback ({unique_vals[0]}=1, {unique_vals[1]}=0)"
+    else:
+        # Case 4: Only 1 category found
+        return None, f"Only one class found: {unique_vals}"
+
+    return target_mask.astype(int), strategy
+
+
 def main():
     start_time = time.time()
     args = parse_arguments()
     
     os.makedirs(args.output, exist_ok=True)
-    
     summary_file = generate_filename("feature_selection_summary", "txt", folder=args.output)
     
     with open(summary_file, 'w', encoding='utf-8') as f:
+        # --- 進入檔案迴圈 ---
         for input_file in args.input:
+            print(f"\nProcessing file: {os.path.basename(input_file)}")
             start_time_per_file = time.perf_counter()
-            data = pd.read_csv(input_file)
-            data['Susceptibility'] = data['Susceptibility'].map({'Susceptible': 0, 'Resistant': 1})
-            data = shuffle(data).reset_index(drop=True)
             
-            X = data.drop(columns=['Susceptibility', 'Genome ID'])
+            data = pd.read_csv(input_file)
+            
+            # --- 動態標籤轉換邏輯 ---
+            encoded_labels, strategy = dynamic_label_encoding(data['Susceptibility'])
+            
+            # 如果轉換失敗（例如只有一種類別）則跳過
+            if encoded_labels is None:
+                msg = f"Skipping {input_file}: {strategy}"
+                print(f"  [Warning] {msg}")
+                f.write(f"Filename: {os.path.basename(input_file)}\n{msg}\n\n")
+                continue # 這裡現在在 for 迴圈內，不會報錯了
+            
+            data['Susceptibility'] = encoded_labels
+            print(f"  [Label Info] Strategy used: {strategy}")
+            print(f"  [Label Info] Distribution: \n{data['Susceptibility'].value_counts()}")
+            
+            # --- 後續處理 ---
+            data = shuffle(data).reset_index(drop=True)
+            X = data.drop(columns=['Susceptibility', 'Genome ID'], errors='ignore')
             y = data['Susceptibility']
             
+            # 分割資料集
             X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=args.test_size, stratify=y,
+                X, y, test_size=args.test_size, stratify=y
             )
             
-            print("Performing feature selection...")
+            print("  Performing feature selection...")
+            # 下面接你原本的特徵選取代碼...
             selected_feature_scores = select_features_advanced(
-                X_train, y_train, repeat=args.repeat, min_occurrence_threshold=args.min_occurrence_threshold, lasso_alpha=0.01, test_size=args.test_size, core=args.core
+                X_train, y_train, repeat=args.repeat, min_occurrence_threshold=args.min_occurrence_threshold, 
+                lasso_alpha=0.01, test_size=args.test_size, core=args.core
             )
             
             selected_features = list(selected_feature_scores.keys())
